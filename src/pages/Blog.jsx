@@ -4,7 +4,7 @@ import { Reveal, SectionTitle } from '../components/UI/Shared';
 
 const BLOG_POSTS = [
   {
-    id: 'ssju-question-paper',
+    id: 'ssju-question-paper',  // 🎯 Ye ID match karna chahiye
     title: 'How I Built SSJU Question Paper Provider',
     excerpt: 'A journey of creating a platform that helps students access previous year question papers easily.',
     date: 'Jan 15, 2025',
@@ -13,7 +13,7 @@ const BLOG_POSTS = [
     color: ACCENTS.teal,
   },
   {
-    id: 'razorpay-integration',
+    id: 'razorpay-integration',  // 🎯 Ye ID match karna chahiye
     title: 'Razorpay Integration Journey',
     excerpt: 'Implementing secure payment gateway for an e-commerce platform. Lessons learned and best practices.',
     date: 'Jan 10, 2025',
@@ -22,14 +22,14 @@ const BLOG_POSTS = [
     color: ACCENTS.rose,
   },
   {
-    id: 'react-bca-student',
+    id: 'react-bca-student',  // 🎯 Ye ID match karna chahiye
     title: 'Learning React as a BCA Student',
     excerpt: 'How I went from zero to building full-fledged React applications during my BCA program.',
     date: 'Jan 5, 2025',
     readTime: '6 min read',
     category: 'Learning',
     color: ACCENTS.amber,
-  },
+  }
 ];
 
 const BlogPage = ({ navigateTo }) => {

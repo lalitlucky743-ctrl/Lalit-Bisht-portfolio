@@ -1,8 +1,10 @@
 import { COLORS, ACCENTS, FONTS } from '../utilities/constants';
 import { Reveal } from '../components/UI/Shared';
 
+// 🎯 Blog Content - Properly Defined
 const blogContent = {
   'ssju-question-paper': {
+    id: 'ssju-question-paper',
     title: 'How I Built SSJU Question Paper Provider',
     content: `
       <p>As a BCA student, I realized that students often struggle to find previous year question papers. 
@@ -38,6 +40,7 @@ const blogContent = {
     `
   },
   'razorpay-integration': {
+    id: 'razorpay-integration',
     title: 'Razorpay Integration Journey',
     content: `
       <p>Implementing Razorpay payment gateway was a challenging but rewarding experience. 
@@ -70,6 +73,7 @@ const blogContent = {
     `
   },
   'react-bca-student': {
+    id: 'react-bca-student',
     title: 'Learning React as a BCA Student',
     content: `
       <p>When I started my BCA journey, I knew I wanted to become a developer. Here's my journey 
@@ -107,13 +111,46 @@ const blogContent = {
 };
 
 const BlogDetailPage = ({ id, navigateTo }) => {
+  // 🎯 Blog post find karo
   const post = blogContent[id];
 
+  // Agar post nahi milti toh error show karo
   if (!post) {
     return (
-      <div style={{ padding: '100px 32px', textAlign: 'center', color: COLORS.text }}>
-        <h2 style={{ fontFamily: FONTS.display, fontSize: '2rem' }}>Blog post not found</h2>
-        <button onClick={() => navigateTo("blog")} style={{ color: ACCENTS.amber, background: 'none', border: 'none', cursor: 'pointer', fontFamily: FONTS.mono, fontSize: '14px' }}>
+      <div style={{ 
+        padding: '100px 32px', 
+        textAlign: 'center', 
+        color: COLORS.text,
+        maxWidth: '600px',
+        margin: '0 auto',
+      }}>
+        <h2 style={{ fontFamily: FONTS.display, fontSize: '2rem', marginBottom: '20px' }}>
+          📝 Blog Post Not Found
+        </h2>
+        <p style={{ color: COLORS.textDim, fontFamily: FONTS.mono, marginBottom: '30px' }}>
+          The blog post you're looking for doesn't exist or has been moved.
+        </p>
+        <button 
+          onClick={() => navigateTo("blog")} 
+          style={{ 
+            color: ACCENTS.amber, 
+            background: 'none', 
+            border: 'none', 
+            cursor: 'pointer', 
+            fontFamily: FONTS.mono, 
+            fontSize: '14px',
+            padding: '12px 24px',
+            border: `1px solid ${ACCENTS.amber}44`,
+            borderRadius: '8px',
+            transition: 'all 0.3s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = `${ACCENTS.amber}22`;
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = 'transparent';
+          }}
+        >
           ← Back to Blog
         </button>
       </div>
@@ -123,10 +160,33 @@ const BlogDetailPage = ({ id, navigateTo }) => {
   return (
     <section style={{ padding: '80px 32px', maxWidth: '800px', margin: '0 auto' }}>
       <Reveal>
-        <button onClick={() => navigateTo("blog")} style={{ color: ACCENTS.amber, background: 'none', border: 'none', cursor: 'pointer', fontFamily: FONTS.mono, fontSize: '14px' }}>
+        <button 
+          onClick={() => navigateTo("blog")} 
+          style={{ 
+            color: ACCENTS.amber, 
+            background: 'none', 
+            border: 'none', 
+            cursor: 'pointer', 
+            fontFamily: FONTS.mono, 
+            fontSize: '14px',
+            transition: 'all 0.3s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.color = '#ffffff';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.color = ACCENTS.amber;
+          }}
+        >
           ← Back to Blog
         </button>
-        <h1 style={{ fontFamily: FONTS.display, fontSize: '2.5rem', color: COLORS.text, margin: '20px 0' }}>
+        <h1 style={{ 
+          fontFamily: FONTS.display, 
+          fontSize: '2.5rem', 
+          color: COLORS.text, 
+          margin: '20px 0 30px',
+          lineHeight: 1.2,
+        }}>
           {post.title}
         </h1>
       </Reveal>
@@ -142,12 +202,29 @@ const BlogDetailPage = ({ id, navigateTo }) => {
           lineHeight: 1.8,
           color: COLORS.textDim,
         }}>
-          <div dangerouslySetInnerHTML={{ __html: post.content }} style={{ 
-            '& h3': { color: ACCENTS.amber, marginTop: '24px', marginBottom: '12px', fontFamily: FONTS.display },
-            '& ul': { marginLeft: '20px', marginBottom: '16px' },
-            '& li': { marginBottom: '6px' },
-            '& p': { marginBottom: '16px' }
-          }} />
+          <div 
+            dangerouslySetInnerHTML={{ __html: post.content }} 
+            style={{
+              '& h3': { 
+                color: ACCENTS.amber, 
+                marginTop: '24px', 
+                marginBottom: '12px', 
+                fontFamily: FONTS.display,
+                fontSize: '20px',
+              },
+              '& ul': { 
+                marginLeft: '20px', 
+                marginBottom: '16px' 
+              },
+              '& li': { 
+                marginBottom: '6px',
+                listStyleType: 'disc',
+              },
+              '& p': { 
+                marginBottom: '16px' 
+              }
+            }} 
+          />
         </div>
       </Reveal>
     </section>

@@ -27,20 +27,21 @@ function App() {
   const [projectId, setProjectId] = useState(null);
   const [blogId, setBlogId] = useState(null);
 
+  // Loading screen timer - 6-7 seconds
   useEffect(() => {
-    // 🔥 6-7 seconds loading screen
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 7000); // 7000ms = 7 seconds
-    
+    }, 7000);
     return () => clearTimeout(timer);
   }, []);
 
+  // Theme save and apply
   useEffect(() => {
     localStorage.setItem('theme', theme);
     document.body.className = theme === 'dark' ? 'dark-mode' : 'light-mode';
   }, [theme]);
 
+  // Command Palette Keyboard Shortcut
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
@@ -55,19 +56,26 @@ function App() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Theme Toggle Function
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
+  // Navigation Function - SPA Routing
   const navigateTo = (page, id = null) => {
     setCurrentPage(page);
     if (id) {
-      if (page === "project") setProjectId(id);
-      if (page === "blog") setBlogId(id);
+      if (page === "project") {
+        setProjectId(id);
+      }
+      if (page === "blogdetail") {
+        setBlogId(id);
+      }
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Render Page Based on Current State
   const renderPage = () => {
     switch (currentPage) {
       case "about":
@@ -89,6 +97,7 @@ function App() {
     }
   };
 
+  // Loading Screen
   if (loading) return <LoadingScreen />;
 
   return (
@@ -98,6 +107,8 @@ function App() {
       transition: 'background 0.3s ease',
     }}>
       <Analytics />
+      
+      {/* Navbar */}
       <NavBar 
         currentPage={currentPage}
         navigateTo={navigateTo} 
@@ -105,6 +116,8 @@ function App() {
         theme={theme} 
         setIsCommandPaletteOpen={setIsCommandPaletteOpen} 
       />
+      
+      {/* Command Palette */}
       <CommandPalette 
         isOpen={isCommandPaletteOpen} 
         setIsOpen={setIsCommandPaletteOpen}
@@ -112,6 +125,7 @@ function App() {
         theme={theme}
       />
       
+      {/* Page Content with Animation */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentPage + (projectId || '') + (blogId || '')}
@@ -124,6 +138,7 @@ function App() {
         </motion.div>
       </AnimatePresence>
       
+      {/* Footer */}
       <Footer theme={theme} />
     </div>
   );
