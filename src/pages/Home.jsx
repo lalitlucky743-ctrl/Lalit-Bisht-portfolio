@@ -1,11 +1,14 @@
 import { FaGithub } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import Hero3D from "../components/3D/Hero3D";
 import SkillsOrbit from "../components/3D/SkillsOrbit";
 import { Reveal, Eyebrow, GlowBlobs } from "../components/UI/Shared";
 import { motion } from "framer-motion";
 import { COLORS, ACCENTS, FONTS, PROFILE } from "../utilities/constants";
 
-function HomePage({ setPage }) {
+function HomePage() {
+  const navigate = useNavigate();
+
   return (
     <>
       <section
@@ -70,18 +73,64 @@ function HomePage({ setPage }) {
 
             <Reveal delay={0.24}>
               <div style={{ marginTop: "40px", display: "flex", gap: "16px", flexWrap: "wrap" }}>
-                <button
-                  onClick={() => {
-                    window.location.hash = "projects";
-                    setPage("projects");
-                  }}
+                {/* View Projects Button - Fixed */}
+                <motion.button
+                  onClick={() => navigate("/projects")}
                   className="btn-primary"
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: '0 8px 30px rgba(251,191,96,0.3)'
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{
+                    fontFamily: FONTS.mono,
+                    fontSize: '13px',
+                    letterSpacing: '0.05em',
+                    color: '#0a0a0c',
+                    border: 'none',
+                    padding: '13px 28px',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    background: 'linear-gradient(135deg, #fbbf60, #ff6b8a)',
+                    backgroundSize: '200% 200%',
+                    animation: 'gradientMove 3s ease infinite',
+                    transition: 'all 0.3s ease',
+                    fontWeight: 600,
+                  }}
                 >
-                  View Projects
-                </button>
-                <a href={PROFILE.github} target="_blank" rel="noreferrer" className="btn-outline">
+                  View Projects →
+                </motion.button>
+
+                {/* GitHub Button */}
+                <motion.a
+                  href={PROFILE.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-outline"
+                  whileHover={{ 
+                    scale: 1.05,
+                    borderColor: ACCENTS.teal,
+                    color: ACCENTS.teal,
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{
+                    fontFamily: FONTS.mono,
+                    fontSize: '13px',
+                    letterSpacing: '0.05em',
+                    color: COLORS.text,
+                    border: `1px solid ${COLORS.border}`,
+                    padding: '13px 26px',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    transition: 'all 0.3s ease',
+                    background: 'transparent',
+                  }}
+                >
                   <FaGithub size={15} /> GitHub
-                </a>
+                </motion.a>
               </div>
             </Reveal>
           </div>
