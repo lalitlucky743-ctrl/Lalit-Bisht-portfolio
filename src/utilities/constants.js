@@ -26,7 +26,7 @@ export const PROFILE = {
   role: "Frontend React Developer",
   tagline: "Passionate developer who builds clean, fast, and useful web experiences.",
   github: "https://github.com/lalitlucky743",
-  githubHandle: "lalitlucky743-ctrl",  // ✅ Updated GitHub ID
+  githubHandle: "lalitlucky743-ctrl",
   email: "lalitlyucky743@gmail.com",
   phone: "9084511340",
   phoneDisplay: "90845 11340",

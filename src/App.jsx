@@ -1,33 +1,42 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Analytics } from '@vercel/analytics/react';
 import NavBar from "./components/UI/Navbar";
 import Footer from "./components/UI/Footer";
 import HomePage from "./pages/Home";
 import AboutPage from "./pages/About";
 import ProjectsPage from "./pages/Projects";
 import ContactPage from "./pages/Contact";
+import ProjectDetailPage from "./pages/ProjectDetail";
+import BlogPage from "./pages/Blog";
+import BlogDetailPage from "./pages/BlogDetail";
+import ResumePage from "./pages/Resume";
 import LoadingScreen from "./components/UI/LoadingScreen";
-// import CustomCursor from "./components/UI/CustomCursor";  // 🔥 Comment karo
+import CommandPalette from "./components/UI/CommandPalette";
 import { COLORS } from "./utilities/constants";
 import "./App.css";
 
-export default function App() {
-  const [page, setPage] = useState(() => window.location.hash.replace("#", "") || "home");
-  const [mobileOpen, setMobileOpen] = useState(false);
+function App() {
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState('dark');
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
 
   useEffect(() => {
-    const onHashChange = () => {
-      const next = window.location.hash.replace("#", "") || "home";
-      setPage(next);
-    };
-    window.addEventListener("hashchange", onHashChange);
-    if (!window.location.hash) window.location.hash = "home";
-    return () => window.removeEventListener("hashchange", onHashChange);
+    setTimeout(() => setLoading(false), 2000);
   }, []);
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 2500);
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen(true);
+      }
+      if (e.key === 'Escape') {
+        setIsCommandPaletteOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const toggleTheme = () => {
@@ -35,20 +44,32 @@ export default function App() {
     document.body.className = theme === 'dark' ? 'light-mode' : 'dark-mode';
   };
 
-  let content;
-  if (page === "about") content = <AboutPage />;
-  else if (page === "projects") content = <ProjectsPage />;
-  else if (page === "contact") content = <ContactPage />;
-  else content = <HomePage setPage={setPage} />;
-
   if (loading) return <LoadingScreen />;
 
   return (
-    <div style={{ background: COLORS.bg, minHeight: "100vh" }}>
-      {/* <CustomCursor /> */}  {/* 🔥 Comment karo */}
-      <NavBar page={page} setPage={setPage} mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} toggleTheme={toggleTheme} theme={theme} />
-      {content}
-      <Footer />
-    </div>
+    <Router>
+      <div style={{ background: COLORS.bg, minHeight: "100vh" }}>
+        <Analytics />
+        <NavBar 
+          toggleTheme={toggleTheme} 
+          theme={theme} 
+          setIsCommandPaletteOpen={setIsCommandPaletteOpen} 
+        />
+        <CommandPalette isOpen={isCommandPaletteOpen} setIsOpen={setIsCommandPaletteOpen} />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/project/:id" element={<ProjectDetailPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:id" element={<BlogDetailPage />} />
+          <Route path="/resume" element={<ResumePage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
+
+export default App;
