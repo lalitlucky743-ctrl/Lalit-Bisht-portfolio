@@ -1,25 +1,22 @@
-import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
-import { COLORS, ACCENTS, FONTS, PROJECTS } from '../utilities/constants';
+import { COLORS, ACCENTS, FONTS, PROJECTS, PROFILE } from '../utilities/constants';
 import { Reveal } from '../components/UI/Shared';
 
-const ProjectDetailPage = () => {
-  const { id } = useParams();
+const ProjectDetailPage = ({ id, navigateTo }) => {
   const project = PROJECTS.find(p => p.id === id);
 
   if (!project) {
     return (
       <div style={{ padding: '100px 32px', textAlign: 'center', color: COLORS.text }}>
         <h2 style={{ fontFamily: FONTS.display, fontSize: '2rem' }}>Project not found</h2>
-        <Link to="/projects" style={{ color: ACCENTS.amber, textDecoration: 'none', fontFamily: FONTS.mono }}>
+        <button onClick={() => navigateTo("projects")} style={{ color: ACCENTS.amber, background: 'none', border: 'none', cursor: 'pointer', fontFamily: FONTS.mono, fontSize: '14px' }}>
           ← Back to Projects
-        </Link>
+        </button>
       </div>
     );
   }
 
-  // Detailed project data
   const projectDetails = {
     problem: `Users were struggling to find ${project.title.toLowerCase()} solutions that were both affordable and user-friendly. Existing platforms were either too complex or lacked essential features.`,
     solution: `Built a ${project.tags.join(', ')} based platform that provides a seamless experience. Focused on simplicity, speed, and performance.`,
@@ -34,9 +31,9 @@ const ProjectDetailPage = () => {
   return (
     <section style={{ padding: '80px 32px', maxWidth: '900px', margin: '0 auto' }}>
       <Reveal>
-        <Link to="/projects" style={{ color: ACCENTS.amber, textDecoration: 'none', fontFamily: FONTS.mono, fontSize: '14px' }}>
+        <button onClick={() => navigateTo("projects")} style={{ color: ACCENTS.amber, background: 'none', border: 'none', cursor: 'pointer', fontFamily: FONTS.mono, fontSize: '14px' }}>
           ← Back to Projects
-        </Link>
+        </button>
         <h1 style={{ fontFamily: FONTS.display, fontSize: '2.5rem', color: COLORS.text, margin: '20px 0 10px' }}>
           {project.title}
         </h1>

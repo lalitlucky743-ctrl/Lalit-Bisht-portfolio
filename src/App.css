@@ -491,3 +491,257 @@ section {
     display: none !important;
   }
 }
+/* Add to existing App.css */
+
+/* Page Transition */
+.page-transition {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Navbar Active Indicator */
+.nav-active::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, #fbbf60, #ff6b8a);
+  border-radius: 2px;
+}
+
+/* Gradient Animation */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Responsive fixes */
+@media (max-width: 719px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-toggle {
+    display: inline-flex !important;
+  }
+}
+
+@media (min-width: 720px) {
+  .mobile-toggle {
+    display: none !important;
+  }
+}
+/* Add to index.css */
+
+/* Dark Mode (Default) */
+.dark-mode {
+  --bg: #0a0a0c;
+  --text: #f4f2ed;
+  --text-dim: #8a8f98;
+  --panel: #131317;
+  --border: rgba(244,242,237,0.09);
+}
+
+/* Light Mode */
+.light-mode {
+  --bg: #f5f5f7;
+  --text: #1a1a2e;
+  --text-dim: #6b6b7a;
+  --panel: #ffffff;
+  --border: rgba(0,0,0,0.06);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Scrollbar for Dark/Light Mode */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4a9eff, #6c5ce7);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #6c5ce7, #4a9eff);
+}
+/* Add to existing App.css */
+
+/* Gradient animation */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Navbar styles with theme support */
+.nav-link {
+  background: none !important;
+  border: none !important;
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: #fbbf60 !important;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fbbf60, #ff6b8a);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 20px;
+}
+
+.nav-active {
+  color: #fbbf60 !important;
+}
+
+.nav-active::after {
+  width: 20px !important;
+}
+
+/* Theme toggle button animation */
+.theme-toggle {
+  transition: transform 0.5s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(180deg);
+}
+
+/* Light mode specific styles */
+.light-mode .card {
+  background: rgba(255,255,255,0.9) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+.light-mode .gradient-text {
+  background: linear-gradient(100deg, #1a1a2e 20%, #667eea 55%, #764ba2 75%, #a78bfa 95%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+.light-mode .illustration-panel {
+  background: rgba(255,255,255,0.9) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+.light-mode .tag {
+  color: #1a1a2e !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
+.light-mode .tag:hover {
+  color: #0a0a0c !important;
+}
+
+.light-mode .inline-link {
+  color: #667eea !important;
+}
+
+.light-mode .input {
+  color: #1a1a2e !important;
+  background: rgba(255,255,255,0.8) !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
+.light-mode .input:focus {
+  border-color: #fbbf60 !important;
+  box-shadow: 0 0 30px rgba(251,191,96,0.1) !important;
+}
+
+.light-mode .btn-outline {
+  color: #1a1a2e !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
+.light-mode .btn-outline:hover {
+  border-color: #2fd9c4 !important;
+  color: #2fd9c4 !important;
+}
+
+.light-mode .contact-row {
+  color: #1a1a2e !important;
+}
+
+.light-mode .contact-row:hover {
+  color: var(--rc) !important;
+}
+
+.light-mode .callout {
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+.light-mode .logo-mark {
+  border-color: #fbbf60 !important;
+}
+
+.light-mode .brand-text {
+  color: #1a1a2e !important;
+}
+
+.light-mode .social {
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+.light-mode .social:hover {
+  border-color: var(--hc) !important;
+}

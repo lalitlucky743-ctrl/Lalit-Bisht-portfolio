@@ -81,7 +81,6 @@ function ContactPage() {
               WhatsApp, email directly, or use the form — every path reaches me.
             </p>
 
-            {/* Contact Links with Icons */}
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <motion.a 
                 href={`tel:${PROFILE.phone}`} 

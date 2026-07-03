@@ -1,14 +1,11 @@
 import { FaGithub } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import Hero3D from "../components/3D/Hero3D";
 import SkillsOrbit from "../components/3D/SkillsOrbit";
 import { Reveal, Eyebrow, GlowBlobs } from "../components/UI/Shared";
 import { motion } from "framer-motion";
 import { COLORS, ACCENTS, FONTS, PROFILE } from "../utilities/constants";
 
-function HomePage() {
-  const navigate = useNavigate();
-
+function HomePage({ navigateTo }) {
   return (
     <>
       <section
@@ -73,9 +70,8 @@ function HomePage() {
 
             <Reveal delay={0.24}>
               <div style={{ marginTop: "40px", display: "flex", gap: "16px", flexWrap: "wrap" }}>
-                {/* View Projects Button - Fixed */}
                 <motion.button
-                  onClick={() => navigate("/projects")}
+                  onClick={() => navigateTo("projects")}
                   className="btn-primary"
                   whileHover={{ 
                     scale: 1.05,
@@ -101,7 +97,6 @@ function HomePage() {
                   View Projects →
                 </motion.button>
 
-                {/* GitHub Button */}
                 <motion.a
                   href={PROFILE.github}
                   target="_blank"
@@ -137,7 +132,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Skills Orbit Section */}
       <section style={{ 
         position: "relative", 
         padding: "80px 20px",

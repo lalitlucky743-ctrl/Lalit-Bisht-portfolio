@@ -53,7 +53,7 @@ function AboutPage() {
           </Reveal>
         </div>
 
-        {/* ACHIEVEMENT COUNTERS - Premium Section */}
+        {/* Achievement Counters */}
         <Reveal delay={0.2} style={{ marginTop: "50px" }}>
           <div style={{
             display: "grid",
@@ -99,7 +99,6 @@ function AboutPage() {
           </div>
         </Reveal>
 
-        {/* Skills Section */}
         <Reveal delay={0.3} style={{ marginTop: "56px" }}>
           <div
             style={{
@@ -129,16 +128,6 @@ function AboutPage() {
                   background: 'rgba(244,242,237,0.03)',
                   transition: 'all 0.25s ease',
                   cursor: 'default',
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.background = Object.values(ACCENTS)[i % 4];
-                  e.target.style.color = '#0a0a0c';
-                  e.target.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.background = 'rgba(244,242,237,0.03)';
-                  e.target.style.color = COLORS.text;
-                  e.target.style.transform = 'translateY(0)';
                 }}
               >
                 {skill}

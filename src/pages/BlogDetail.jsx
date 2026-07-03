@@ -1,5 +1,3 @@
-import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { COLORS, ACCENTS, FONTS } from '../utilities/constants';
 import { Reveal } from '../components/UI/Shared';
 
@@ -108,15 +106,16 @@ const blogContent = {
   }
 };
 
-const BlogDetailPage = () => {
-  const { id } = useParams();
+const BlogDetailPage = ({ id, navigateTo }) => {
   const post = blogContent[id];
 
   if (!post) {
     return (
       <div style={{ padding: '100px 32px', textAlign: 'center', color: COLORS.text }}>
-        <h2>Blog post not found</h2>
-        <Link to="/blog" style={{ color: ACCENTS.amber }}>Back to Blog</Link>
+        <h2 style={{ fontFamily: FONTS.display, fontSize: '2rem' }}>Blog post not found</h2>
+        <button onClick={() => navigateTo("blog")} style={{ color: ACCENTS.amber, background: 'none', border: 'none', cursor: 'pointer', fontFamily: FONTS.mono, fontSize: '14px' }}>
+          ← Back to Blog
+        </button>
       </div>
     );
   }
@@ -124,9 +123,9 @@ const BlogDetailPage = () => {
   return (
     <section style={{ padding: '80px 32px', maxWidth: '800px', margin: '0 auto' }}>
       <Reveal>
-        <Link to="/blog" style={{ color: ACCENTS.amber, textDecoration: 'none', fontFamily: FONTS.mono, fontSize: '14px' }}>
+        <button onClick={() => navigateTo("blog")} style={{ color: ACCENTS.amber, background: 'none', border: 'none', cursor: 'pointer', fontFamily: FONTS.mono, fontSize: '14px' }}>
           ← Back to Blog
-        </Link>
+        </button>
         <h1 style={{ fontFamily: FONTS.display, fontSize: '2.5rem', color: COLORS.text, margin: '20px 0' }}>
           {post.title}
         </h1>

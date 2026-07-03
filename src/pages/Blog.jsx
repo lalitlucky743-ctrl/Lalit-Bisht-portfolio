@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { COLORS, ACCENTS, FONTS } from '../utilities/constants';
 import { Reveal, SectionTitle } from '../components/UI/Shared';
@@ -33,7 +32,7 @@ const BLOG_POSTS = [
   },
 ];
 
-const BlogPage = () => {
+const BlogPage = ({ navigateTo }) => {
   return (
     <section style={{ padding: '80px 32px', maxWidth: '900px', margin: '0 auto' }}>
       <Reveal>
@@ -55,20 +54,20 @@ const BlogPage = () => {
                 border: `1px solid ${COLORS.border}`,
                 borderLeft: `4px solid ${post.color}`,
                 transition: 'all 0.3s ease',
+                cursor: 'pointer',
               }}
+              onClick={() => navigateTo("blogdetail", post.id)}
             >
-              <Link to={`/blog/${post.id}`} style={{ textDecoration: 'none' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', marginBottom: '8px' }}>
-                  <h3 style={{ fontFamily: FONTS.display, fontSize: '20px', color: COLORS.text }}>{post.title}</h3>
-                  <span style={{ background: `${post.color}22`, color: post.color, padding: '2px 12px', borderRadius: '20px', fontSize: '11px', fontFamily: FONTS.mono }}>{post.category}</span>
-                </div>
-                <p style={{ color: COLORS.textDim, fontFamily: FONTS.mono, fontSize: '14px', lineHeight: 1.6 }}>{post.excerpt}</p>
-                <div style={{ display: 'flex', gap: '16px', marginTop: '12px', color: COLORS.textDim, fontFamily: FONTS.mono, fontSize: '12px' }}>
-                  <span>{post.date}</span>
-                  <span>•</span>
-                  <span>{post.readTime}</span>
-                </div>
-              </Link>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', marginBottom: '8px' }}>
+                <h3 style={{ fontFamily: FONTS.display, fontSize: '20px', color: COLORS.text }}>{post.title}</h3>
+                <span style={{ background: `${post.color}22`, color: post.color, padding: '2px 12px', borderRadius: '20px', fontSize: '11px', fontFamily: FONTS.mono }}>{post.category}</span>
+              </div>
+              <p style={{ color: COLORS.textDim, fontFamily: FONTS.mono, fontSize: '14px', lineHeight: 1.6 }}>{post.excerpt}</p>
+              <div style={{ display: 'flex', gap: '16px', marginTop: '12px', color: COLORS.textDim, fontFamily: FONTS.mono, fontSize: '12px' }}>
+                <span>{post.date}</span>
+                <span>•</span>
+                <span>{post.readTime}</span>
+              </div>
             </motion.div>
           </Reveal>
         ))}

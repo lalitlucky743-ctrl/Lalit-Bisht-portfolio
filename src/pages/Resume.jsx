@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { FaDownload, FaGraduationCap, FaBriefcase, FaCode, FaAward, FaUser } from 'react-icons/fa';
-import { COLORS, ACCENTS, FONTS, PROFILE, SKILLS } from '../utilities/constants';
+import { FaDownload, FaGraduationCap, FaBriefcase, FaCode, FaAward } from 'react-icons/fa';
+import { COLORS, ACCENTS, FONTS, SKILLS } from '../utilities/constants';
 import { Reveal, SectionTitle } from '../components/UI/Shared';
 
 const education = [

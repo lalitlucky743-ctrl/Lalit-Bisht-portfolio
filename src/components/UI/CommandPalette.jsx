@@ -1,20 +1,18 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaFileDownload, FaEnvelope, FaProjectDiagram, FaBlog, FaUser, FaFileAlt } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 import { COLORS, ACCENTS, FONTS, PROFILE } from '../../utilities/constants';
 
-const CommandPalette = ({ isOpen, setIsOpen }) => {
-  const navigate = useNavigate();
+const CommandPalette = ({ isOpen, setIsOpen, navigateTo, theme }) => {
   const [search, setSearch] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const commands = [
-    { icon: FaUser, label: 'Go to About', action: () => navigate('/about') },
-    { icon: FaProjectDiagram, label: 'Go to Projects', action: () => navigate('/projects') },
-    { icon: FaBlog, label: 'Go to Blog', action: () => navigate('/blog') },
-    { icon: FaFileAlt, label: 'Go to Resume', action: () => navigate('/resume') },
-    { icon: FaEnvelope, label: 'Go to Contact', action: () => navigate('/contact') },
+    { icon: FaUser, label: 'Go to About', action: () => navigateTo('about') },
+    { icon: FaProjectDiagram, label: 'Go to Projects', action: () => navigateTo('projects') },
+    { icon: FaBlog, label: 'Go to Blog', action: () => navigateTo('blog') },
+    { icon: FaFileAlt, label: 'Go to Resume', action: () => navigateTo('resume') },
+    { icon: FaEnvelope, label: 'Go to Contact', action: () => navigateTo('contact') },
     { icon: FaGithub, label: 'Open GitHub', action: () => window.open(PROFILE.github, '_blank') },
     { icon: FaFileDownload, label: 'Download Resume', action: () => window.open('/resume.pdf', '_blank') },
   ];
@@ -50,6 +48,34 @@ const CommandPalette = ({ isOpen, setIsOpen }) => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, filteredCommands, selectedIndex, setIsOpen]);
 
+  const getBackground = () => {
+    if (theme === 'dark') {
+      return COLORS.panel;
+    }
+    return '#ffffff';
+  };
+
+  const getTextColor = () => {
+    if (theme === 'dark') {
+      return COLORS.text;
+    }
+    return '#1a1a2e';
+  };
+
+  const getBorderColor = () => {
+    if (theme === 'dark') {
+      return COLORS.border;
+    }
+    return 'rgba(0,0,0,0.08)';
+  };
+
+  const getHoverBg = () => {
+    if (theme === 'dark') {
+      return 'rgba(255,255,255,0.06)';
+    }
+    return 'rgba(0,0,0,0.05)';
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -61,7 +87,7 @@ const CommandPalette = ({ isOpen, setIsOpen }) => {
           style={{
             position: 'fixed',
             inset: 0,
-            background: 'rgba(0,0,0,0.7)',
+            background: theme === 'dark' ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0.3)',
             backdropFilter: 'blur(10px)',
             zIndex: 1000,
             display: 'flex',
@@ -78,14 +104,15 @@ const CommandPalette = ({ isOpen, setIsOpen }) => {
             style={{
               maxWidth: '560px',
               width: '100%',
-              background: COLORS.panel,
+              background: getBackground(),
               borderRadius: '16px',
-              border: `1px solid ${COLORS.border}`,
+              border: `1px solid ${getBorderColor()}`,
               overflow: 'hidden',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+              boxShadow: theme === 'dark' ? '0 20px 60px rgba(0,0,0,0.5)' : '0 20px 60px rgba(0,0,0,0.1)',
+              transition: 'all 0.3s ease',
             }}
           >
-            <div style={{ padding: '16px 20px', borderBottom: `1px solid ${COLORS.border}` }}>
+            <div style={{ padding: '16px 20px', borderBottom: `1px solid ${getBorderColor()}` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <span style={{ color: ACCENTS.amber, fontFamily: FONTS.mono, fontSize: '14px' }}>⌘</span>
                 <input
@@ -97,14 +124,14 @@ const CommandPalette = ({ isOpen, setIsOpen }) => {
                   style={{
                     background: 'transparent',
                     border: 'none',
-                    color: COLORS.text,
+                    color: getTextColor(),
                     fontFamily: FONTS.mono,
                     fontSize: '14px',
                     outline: 'none',
                     width: '100%',
                   }}
                 />
-                <span style={{ color: COLORS.textDim, fontFamily: FONTS.mono, fontSize: '12px' }}>
+                <span style={{ color: theme === 'dark' ? COLORS.textDim : 'rgba(0,0,0,0.4)', fontFamily: FONTS.mono, fontSize: '12px' }}>
                   {filteredCommands.length} results
                 </span>
               </div>
@@ -122,28 +149,28 @@ const CommandPalette = ({ isOpen, setIsOpen }) => {
                     padding: '10px 16px',
                     width: '100%',
                     borderRadius: '8px',
-                    background: index === selectedIndex ? 'rgba(255,255,255,0.06)' : 'transparent',
+                    background: index === selectedIndex ? getHoverBg() : 'transparent',
                     border: 'none',
                     cursor: 'pointer',
-                    color: COLORS.text,
+                    color: getTextColor(),
                     fontFamily: FONTS.mono,
                     fontSize: '13px',
-                    transition: 'background 0.2s ease',
+                    transition: 'all 0.2s ease',
                   }}
                 >
                   <cmd.icon size={18} color={ACCENTS.amber} />
                   {cmd.label}
-                  <span style={{ marginLeft: 'auto', color: COLORS.textDim, fontSize: '11px' }}>
+                  <span style={{ marginLeft: 'auto', color: theme === 'dark' ? COLORS.textDim : 'rgba(0,0,0,0.3)', fontSize: '11px' }}>
                     {index === 0 && '⌘+Enter'}
                   </span>
                 </motion.button>
               ))}
             </div>
-            <div style={{ padding: '10px 20px', borderTop: `1px solid ${COLORS.border}`, display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ color: COLORS.textDim, fontFamily: FONTS.mono, fontSize: '11px' }}>
+            <div style={{ padding: '10px 20px', borderTop: `1px solid ${getBorderColor()}`, display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ color: theme === 'dark' ? COLORS.textDim : 'rgba(0,0,0,0.4)', fontFamily: FONTS.mono, fontSize: '11px' }}>
                 Press ⌘K to open · Esc to close
               </span>
-              <span style={{ color: COLORS.textDim, fontFamily: FONTS.mono, fontSize: '11px' }}>
+              <span style={{ color: theme === 'dark' ? COLORS.textDim : 'rgba(0,0,0,0.4)', fontFamily: FONTS.mono, fontSize: '11px' }}>
                 ↑↓ to navigate
               </span>
             </div>

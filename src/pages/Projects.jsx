@@ -1,7 +1,6 @@
 import { FaGithub } from "react-icons/fa";
 import { MdCode, MdShoppingBag, MdDescription, MdMenuBook, MdPublic, MdStars } from "react-icons/md";
 import { FiExternalLink } from "react-icons/fi";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Reveal, Eyebrow, SectionTitle, SectionGlow } from "../components/UI/Shared";
 import { COLORS, ACCENTS, FONTS, PROFILE, PROJECTS } from "../utilities/constants";
@@ -13,7 +12,7 @@ const PROJECT_ICON = {
   portfolio: MdPublic,
 };
 
-function ProjectCard({ project, index }) {
+function ProjectCard({ project, index, navigateTo }) {
   const Icon = PROJECT_ICON[project.id] || MdCode;
   
   return (
@@ -161,8 +160,8 @@ function ProjectCard({ project, index }) {
             <FaGithub size={13} /> Source
           </motion.a>
 
-          <Link
-            to={`/project/${project.id}`}
+          <button
+            onClick={() => navigateTo("project", project.id)}
             style={{
               fontFamily: FONTS.mono,
               fontSize: '12.5px',
@@ -171,6 +170,9 @@ function ProjectCard({ project, index }) {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '6px',
+              border: 'none',
+              background: 'none',
+              cursor: 'pointer',
               borderBottom: '1px solid transparent',
               transition: 'all 0.25s ease',
             }}
@@ -184,14 +186,14 @@ function ProjectCard({ project, index }) {
             }}
           >
             View Details →
-          </Link>
+          </button>
         </div>
       </motion.div>
     </Reveal>
   );
 }
 
-function ProjectsPage() {
+function ProjectsPage({ navigateTo }) {
   return (
     <section style={{ position: "relative", overflow: "hidden" }}>
       <SectionGlow tone="mixed" />
@@ -209,7 +211,7 @@ function ProjectsPage() {
           }}
         >
           {PROJECTS.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} />
+            <ProjectCard key={p.id} project={p} index={i} navigateTo={navigateTo} />
           ))}
         </div>
 

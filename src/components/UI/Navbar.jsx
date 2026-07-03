@@ -1,26 +1,49 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { MdMenu, MdClose, MdLightMode, MdDarkMode, MdSearch } from "react-icons/md";
 import { motion } from "framer-motion";
-import { FONTS } from "../../utilities/constants";
+import { FONTS, COLORS } from "../../utilities/constants";
 
-function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
+function NavBar({ currentPage, navigateTo, toggleTheme, theme, setIsCommandPaletteOpen }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const location = useLocation();
 
   const links = [
-    { id: "home", label: "Home", path: "/" },
-    { id: "about", label: "About", path: "/about" },
-    { id: "projects", label: "Projects", path: "/projects" },
-    { id: "blog", label: "Blog", path: "/blog" },
-    { id: "resume", label: "Resume", path: "/resume" },
-    { id: "contact", label: "Contact", path: "/contact" },
+    { id: "home", label: "Home" },
+    { id: "about", label: "About" },
+    { id: "projects", label: "Projects" },
+    { id: "blog", label: "Blog" },
+    { id: "resume", label: "Resume" },
+    { id: "contact", label: "Contact" },
   ];
 
-  const isActive = (path) => {
-    if (path === "/" && location.pathname === "/") return true;
-    if (path !== "/" && location.pathname.startsWith(path)) return true;
-    return false;
+  const isActive = (id) => currentPage === id;
+
+  // Theme based styles
+  const getBackground = () => {
+    if (theme === 'dark') {
+      return 'rgba(10,10,12,0.85)';
+    }
+    return 'rgba(245,245,247,0.9)';
+  };
+
+  const getTextColor = () => {
+    if (theme === 'dark') {
+      return '#ffffff';
+    }
+    return '#1a1a2e';
+  };
+
+  const getBorderColor = () => {
+    if (theme === 'dark') {
+      return 'rgba(255,255,255,0.05)';
+    }
+    return 'rgba(0,0,0,0.05)';
+  };
+
+  const getNavLinkColor = (active) => {
+    if (theme === 'dark') {
+      return active ? '#fbbf60' : 'rgba(255,255,255,0.6)';
+    }
+    return active ? '#fbbf60' : 'rgba(0,0,0,0.6)';
   };
 
   return (
@@ -32,11 +55,12 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        background: "rgba(10,10,12,0.85)",
+        background: getBackground(),
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
-        borderBottom: "1px solid rgba(255,255,255,0.05)",
-        boxShadow: "0 4px 30px rgba(0,0,0,0.3)",
+        borderBottom: `1px solid ${getBorderColor()}`,
+        boxShadow: theme === 'dark' ? '0 4px 30px rgba(0,0,0,0.3)' : '0 4px 30px rgba(0,0,0,0.05)',
+        transition: 'all 0.3s ease',
       }}
     >
       <div
@@ -50,7 +74,17 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
         }}
       >
         {/* Logo */}
-        <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <button 
+          onClick={() => navigateTo("home")}
+          style={{ 
+            background: 'none', 
+            border: 'none', 
+            cursor: 'pointer', 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '12px' 
+          }}
+        >
           <div className="logo-mark" style={{
             width: '38px',
             height: '38px',
@@ -68,24 +102,30 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
           }}>
             LB
           </div>
-          <span className="brand-text" style={{ fontFamily: FONTS.mono, fontSize: '14px', color: '#ffffff', letterSpacing: '0.05em' }}>
+          <span className="brand-text" style={{ 
+            fontFamily: FONTS.mono, 
+            fontSize: '14px', 
+            color: getTextColor(),
+            letterSpacing: '0.05em',
+            transition: 'color 0.3s ease',
+          }}>
             Lalit Bisht
           </span>
-        </Link>
+        </button>
 
         {/* Desktop Nav */}
         <nav style={{ display: "flex", gap: "4px", alignItems: "center" }} className="desktop-nav">
           {links.map((l) => (
-            <Link
+            <button
               key={l.id}
-              to={l.path}
-              className={`nav-link ${isActive(l.path) ? "nav-active" : ""}`}
+              onClick={() => navigateTo(l.id)}
+              className={`nav-link ${isActive(l.id) ? "nav-active" : ""}`}
               style={{
-                color: isActive(l.path) ? '#fbbf60' : 'rgba(255,255,255,0.6)',
-                fontWeight: isActive(l.path) ? '600' : '400',
+                color: getNavLinkColor(isActive(l.id)),
+                fontWeight: isActive(l.id) ? '600' : '400',
                 padding: '8px 18px',
                 borderRadius: '8px',
-                background: isActive(l.path) ? 'rgba(251,191,96,0.08)' : 'none',
+                background: isActive(l.id) ? (theme === 'dark' ? 'rgba(251,191,96,0.08)' : 'rgba(251,191,96,0.1)') : 'none',
                 border: 'none',
                 cursor: 'pointer',
                 fontFamily: FONTS.mono,
@@ -93,11 +133,10 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
                 letterSpacing: '0.05em',
                 transition: 'all 0.3s ease',
                 position: 'relative',
-                textDecoration: 'none',
               }}
             >
               {l.label}
-              {isActive(l.path) && (
+              {isActive(l.id) && (
                 <motion.div
                   layoutId="activeIndicator"
                   style={{
@@ -112,16 +151,16 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
                   }}
                 />
               )}
-            </Link>
+            </button>
           ))}
           
           {/* Command Palette Button */}
           <button
             onClick={() => setIsCommandPaletteOpen(true)}
             style={{
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              color: '#ffffff',
+              background: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+              border: `1px solid ${getBorderColor()}`,
+              color: getTextColor(),
               cursor: 'pointer',
               padding: '8px 12px',
               borderRadius: '8px',
@@ -134,16 +173,16 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
             }}
           >
             <MdSearch size={16} />
-            <span style={{ color: 'rgba(255,255,255,0.4)' }}>⌘K</span>
+            <span style={{ color: theme === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)' }}>⌘K</span>
           </button>
 
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
             style={{
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              color: '#ffffff',
+              background: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+              border: `1px solid ${getBorderColor()}`,
+              color: getTextColor(),
               cursor: 'pointer',
               padding: '8px 12px',
               borderRadius: '50%',
@@ -153,6 +192,12 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
               transition: 'all 0.3s ease',
               marginLeft: '4px',
             }}
+            whileHover={{ 
+              scale: 1.1,
+              rotate: 180,
+              backgroundColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+            }}
+            whileTap={{ scale: 0.9 }}
           >
             {theme === 'dark' ? <MdLightMode size={20} /> : <MdDarkMode size={20} />}
           </button>
@@ -163,7 +208,7 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
           className="mobile-toggle" 
           onClick={() => setMobileOpen(!mobileOpen)} 
           style={{ 
-            color: '#ffffff', 
+            color: getTextColor(), 
             background: 'none', 
             border: 'none', 
             cursor: 'pointer', 
@@ -183,9 +228,9 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
           transition={{ duration: 0.3 }}
           style={{
             overflow: 'hidden',
-            borderTop: '1px solid rgba(255,255,255,0.05)',
+            borderTop: `1px solid ${getBorderColor()}`,
             padding: '12px 32px 20px',
-            background: 'rgba(10,10,12,0.95)',
+            background: theme === 'dark' ? 'rgba(10,10,12,0.95)' : 'rgba(245,245,247,0.95)',
             backdropFilter: 'blur(20px)',
             display: 'flex',
             flexDirection: 'column',
@@ -193,15 +238,17 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
           }}
         >
           {links.map((l) => (
-            <Link
+            <button
               key={l.id}
-              to={l.path}
-              onClick={() => setMobileOpen(false)}
-              className={`nav-link nav-link-mobile ${isActive(l.path) ? "nav-active" : ""}`}
+              onClick={() => {
+                navigateTo(l.id);
+                setMobileOpen(false);
+              }}
+              className={`nav-link nav-link-mobile ${isActive(l.id) ? "nav-active" : ""}`}
               style={{
-                color: isActive(l.path) ? '#fbbf60' : 'rgba(255,255,255,0.6)',
+                color: getNavLinkColor(isActive(l.id)),
                 padding: '10px 4px',
-                fontWeight: isActive(l.path) ? '600' : '400',
+                fontWeight: isActive(l.id) ? '600' : '400',
                 textAlign: 'left',
                 background: 'none',
                 border: 'none',
@@ -210,11 +257,10 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
                 fontSize: '14px',
                 letterSpacing: '0.05em',
                 transition: 'all 0.3s ease',
-                textDecoration: 'none',
               }}
             >
               {l.label}
-            </Link>
+            </button>
           ))}
           <button
             onClick={() => {
@@ -224,7 +270,7 @@ function NavBar({ toggleTheme, theme, setIsCommandPaletteOpen }) {
             style={{
               background: 'none',
               border: 'none',
-              color: 'rgba(255,255,255,0.6)',
+              color: getNavLinkColor(false),
               cursor: 'pointer',
               padding: '10px 4px',
               textAlign: 'left',
