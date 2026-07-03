@@ -134,3 +134,276 @@ section {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+/* Add to existing App.css */
+
+/* Project Card Premium Effects */
+.project-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.project-card:hover::before {
+  opacity: 0.05;
+}
+
+.project-card .thumb {
+  transition: all 0.3s ease;
+}
+
+/* Scroll Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+/* Premium Glow Effects */
+.glow-border {
+  position: relative;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #fbbf60, #ff6b8a, #a78bfa);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+/* Light Mode Support */
+.light-mode {
+  background: #f5f5f7 !important;
+}
+
+.light-mode .card {
+  background: rgba(255,255,255,0.9) !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
+.light-mode .gradient-text {
+  background: linear-gradient(100deg, #1a1a2e 20%, #667eea 55%, #764ba2 75%, #a78bfa 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0c;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4a9eff, #6c5ce7);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #6c5ce7, #4a9eff);
+}
+
+/* Smooth Loading */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading-dots::after {
+  content: '...';
+  animation: pulse 1.5s ease infinite;
+}
+/* Add to existing App.css */
+
+/* Navbar Styles - Override default */
+.nav-link {
+  background: none !important;
+  border: none !important;
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: #ffffff !important;
+  background: rgba(255,255,255,0.06) !important;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fbbf60, #ff6b8a);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 20px;
+}
+
+.nav-active {
+  color: #fbbf60 !important;
+  background: rgba(251,191,96,0.08) !important;
+}
+
+.nav-active::after {
+  width: 20px !important;
+}
+
+/* Logo styles */
+.logo-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #fbbf60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Playfair Display", Georgia, serif;
+  color: #fbbf60;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.logo-btn:hover .logo-mark {
+  box-shadow: 0 0 20px rgba(251,191,96,0.3);
+  transform: rotate(-6deg);
+}
+
+.brand-text {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+}
+/* Add to existing App.css */
+
+/* Gradient animation for buttons */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Navbar link hover underline animation */
+.nav-link {
+  position: relative;
+  background: none !important;
+  border: none !important;
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fbbf60, #ff6b8a);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 20px;
+}
+
+.nav-active {
+  color: #fbbf60 !important;
+}
+
+.nav-active::after {
+  width: 20px !important;
+}
+
+/* Input focus effects */
+.input {
+  transition: all 0.3s ease !important;
+}
+
+.input:focus {
+  border-color: #fbbf60 !important;
+  box-shadow: 0 0 30px rgba(251,191,96,0.05) !important;
+}
+
+/* Contact link hover animation */
+.contact-link {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.contact-link:hover {
+  transform: translateX(8px);
+}
+
+/* Mobile menu animation */
+.mobile-menu-enter {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-enter-active {
+  max-height: 500px;
+  opacity: 1;
+}

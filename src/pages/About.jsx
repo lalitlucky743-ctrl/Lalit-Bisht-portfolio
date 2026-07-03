@@ -1,5 +1,6 @@
 import { Reveal, Eyebrow, SectionTitle, SectionGlow, DevWorkspaceIllustration } from "../components/UI/Shared";
 import { COLORS, ACCENTS, FONTS, PROFILE, SKILLS } from "../utilities/constants";
+import AchievementCounter from "../components/UI/AchievementCounter";
 
 function AboutPage() {
   return (
@@ -53,7 +54,22 @@ function AboutPage() {
           </Reveal>
         </div>
 
-        <Reveal delay={0.2} style={{ marginTop: "56px" }}>
+        {/* Achievement Counters */}
+        <Reveal delay={0.2} style={{ marginTop: "60px" }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            gap: "24px",
+            marginBottom: "56px"
+          }}>
+            <AchievementCounter target={3} label="Projects Built" suffix="+" color={ACCENTS.amber} />
+            <AchievementCounter target={1500} label="Lines of Code" suffix="+" color={ACCENTS.teal} />
+            <AchievementCounter target={2} label="Live Deployments" suffix="+" color={ACCENTS.rose} />
+            <AchievementCounter target={6} label="Tech Stacks" suffix="" color={ACCENTS.violet} />
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.3} style={{ marginTop: "56px" }}>
           <div
             style={{
               fontFamily: FONTS.mono,

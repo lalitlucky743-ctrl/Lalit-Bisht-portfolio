@@ -2,6 +2,7 @@ import { FaGithub } from "react-icons/fa";
 import { MdCode, MdShoppingBag, MdDescription, MdMenuBook, MdPublic, MdStars } from "react-icons/md";
 import { FiExternalLink } from "react-icons/fi";
 import { Reveal, Eyebrow, SectionTitle, SectionGlow } from "../components/UI/Shared";
+import { motion } from "framer-motion";
 import { COLORS, ACCENTS, FONTS, PROFILE, PROJECTS } from "../utilities/constants";
 
 const PROJECT_ICON = {
@@ -13,18 +14,34 @@ const PROJECT_ICON = {
 
 function ProjectCard({ project, index }) {
   const Icon = PROJECT_ICON[project.id] || MdCode;
+  
   return (
     <Reveal delay={index * 0.08}>
-      <div className="card" style={{ "--accent": project.accent }}>
+      <motion.div 
+        className="card project-card"
+        style={{ "--accent": project.accent }}
+        whileHover={{
+          y: -10,
+          scale: 1.02,
+          boxShadow: `0 20px 60px ${project.accent}44`,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 25,
+        }}
+      >
         <div className="card-bar" />
-        <div
+        <motion.div
           className="thumb"
           style={{
             background: `linear-gradient(135deg, ${project.accent}33, ${project.accent}0d)`,
           }}
+          whileHover={{ rotate: 5, scale: 1.1 }}
+          transition={{ duration: 0.3 }}
         >
           <Icon size={40} color={project.accent} />
-        </div>
+        </motion.div>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <MdCode size={18} color={project.accent} />
           <h3
@@ -58,14 +75,30 @@ function ProjectCard({ project, index }) {
           ))}
         </div>
         <div style={{ display: "flex", gap: "18px" }}>
-          <a href={project.liveUrl} target="_blank" rel="noreferrer" className="inline-link" style={{ "--lc": project.accent }}>
+          <motion.a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-link"
+            style={{ "--lc": project.accent }}
+            whileHover={{ scale: 1.05, x: 5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
             Visit live site <FiExternalLink size={13} />
-          </a>
-          <a href={PROFILE.github} target="_blank" rel="noreferrer" className="inline-link" style={{ "--lc": project.accent }}>
+          </motion.a>
+          <motion.a
+            href={PROFILE.github}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-link"
+            style={{ "--lc": project.accent }}
+            whileHover={{ scale: 1.05, x: 5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
             <FaGithub size={13} /> Source
-          </a>
+          </motion.a>
         </div>
-      </div>
+      </motion.div>
     </Reveal>
   );
 }
@@ -79,17 +112,20 @@ function ProjectsPage() {
           <Eyebrow color={ACCENTS.rose}>Selected Work</Eyebrow>
           <SectionTitle>Projects</SectionTitle>
         </Reveal>
-        <div
+        <motion.div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             gap: "24px",
           }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ staggerChildren: 0.1 }}
         >
           {PROJECTS.map((p, i) => (
             <ProjectCard key={p.id} project={p} index={i} />
           ))}
-        </div>
+        </motion.div>
 
         <Reveal delay={0.3}>
           <div className="callout">
