@@ -20,7 +20,6 @@ function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState(() => {
-    // Local storage se theme load karo
     const savedTheme = localStorage.getItem('theme');
     return savedTheme || 'dark';
   });
@@ -29,10 +28,14 @@ function App() {
   const [blogId, setBlogId] = useState(null);
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 2000);
+    // 🔥 6-7 seconds loading screen
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 7000); // 7000ms = 7 seconds
+    
+    return () => clearTimeout(timer);
   }, []);
 
-  // Theme change hone par local storage mein save karo
   useEffect(() => {
     localStorage.setItem('theme', theme);
     document.body.className = theme === 'dark' ? 'dark-mode' : 'light-mode';
