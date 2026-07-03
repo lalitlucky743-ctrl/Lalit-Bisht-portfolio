@@ -6,8 +6,8 @@ import AboutPage from "./pages/About";
 import ProjectsPage from "./pages/Projects";
 import ContactPage from "./pages/Contact";
 import LoadingScreen from "./components/UI/LoadingScreen";
-import CustomCursor from "./components/UI/CustomCursor";
-import { COLORS, ACCENTS } from "./utilities/constants";
+// import CustomCursor from "./components/UI/CustomCursor";  // 🔥 Comment karo
+import { COLORS } from "./utilities/constants";
 import "./App.css";
 
 export default function App() {
@@ -27,7 +27,6 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // Loader timer
     setTimeout(() => setLoading(false), 2500);
   }, []);
 
@@ -46,7 +45,7 @@ export default function App() {
 
   return (
     <div style={{ background: COLORS.bg, minHeight: "100vh" }}>
-      <CustomCursor />
+      {/* <CustomCursor /> */}  {/* 🔥 Comment karo */}
       <NavBar page={page} setPage={setPage} mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} toggleTheme={toggleTheme} theme={theme} />
       {content}
       <Footer />
